@@ -42,7 +42,7 @@ export MSGVERB="text:action"
 export QA_CHECK_FS=${QA_CHECK_FS:=true}
 
 # number of diff lines from a failed test, 0 for whole output
-export DIFF_LENGTH=${DIFF_LENGTH:=10}
+export DIFF_LENGTH=${DIFF_LENGTH:=1000}
 
 # by default don't output timestamps
 timestamp=${TIMESTAMP:=false}
@@ -1061,6 +1061,7 @@ function run_section()
 			echo ""
 		else
 			_dump_err "- output mismatch (see $seqres.out.bad)"
+			diff -u $seq.out $tmp.out
 			mv $tmp.out $seqres.out.bad
 			$diff $seq.out $seqres.out.bad | {
 			if test "$DIFF_LENGTH" -le 0; then

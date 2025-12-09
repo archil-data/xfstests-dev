@@ -243,8 +243,16 @@ _check()
 	    else
 		$verbose && echo
 		echo "Error: corruption for $file ..."
+		date
 		diff -c $file $file.last
 		touch $tmp.bad
+		sleep 5
+		cmp $file $file.last
+		echo "cmp after sleep: $?"
+		sync
+		date
+		cmp $file $file.last
+		echo "cmp after sync: $?"
 	    fi
 	else
 	    $verbose && echo -n "."
