@@ -237,7 +237,7 @@ _check()
 	# checks that the file and its last copy are the same
 	if [ -f $file.last ]
 	then
-	    if cmp $file $file.last >/dev/null 2>&1
+	    if diff -c $file $file.last
 	    then
 		$verbose && echo -n "."
 	    else
@@ -247,12 +247,15 @@ _check()
 		diff -c $file $file.last
 		touch $tmp.bad
 		sleep 5
-		cmp $file $file.last
+		diff -c $file $file.last
 		echo "cmp after sleep: $?"
 		sync
 		date
-		cmp $file $file.last
+		diff -c $file $file.last
 		echo "cmp after sync: $?"
+		sudo sh -c "echo 3 > /proc/sys/vm/drop_caches"
+		diff -c $file $file.last
+		echo "cmp after drop caches: $?"
 	    fi
 	else
 	    $verbose && echo -n "."
