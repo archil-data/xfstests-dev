@@ -16,7 +16,7 @@ interrupt=true
 diff="diff -u"
 showme=false
 have_test_arg=false
-randomize=false
+randomize=true
 exact_order=false
 export here=`pwd`
 xfile=""
@@ -321,9 +321,6 @@ while [ $# -gt 0 ]; do
 		randomize=true
 		;;
 	--exact-order)
-		if $randomize; then
-			_fatal "Cannnot specify --exact-order and -r."
-		fi
 		exact_order=true
 		;;
 	-i)	iterations=$2; shift ;;
