@@ -258,7 +258,7 @@ _prepare_test_list()
 	if ! $exact_order; then
 		if $randomize; then
 			if type shuf >& /dev/null; then
-				sorter="shuf"
+				sorter="shuf --random-source=/dev/urandom"
 			else
 				sorter="awk -v seed=$RANDOM -f randomize.awk"
 			fi
